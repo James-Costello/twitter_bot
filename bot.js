@@ -1,10 +1,23 @@
 console.log ('BOT IS BOOTING UP...');
-
+var MarkovChain = require('markovchain')
 var Twit = require('twit');
+var fs = require('fs')
+var quotes = new MarkovChain(fs.readFileSync('./quotes.txt', 'utf8'))
+
+// simple text
+// var m = new MarkovChain('tx text te hey hey hey hey hey test on test on')
+
+// m.parse('add additional text')
+
+// console.log(m.parse('more and more text').end(5).process())
+
+
+// import from file
+
+console.log(quotes.start('The').end(5).process())
+
 
 var config = require('./config');
-console.log(config);
-
 var T = new Twit(config)
 
 //Setting up a user stream
@@ -39,21 +52,21 @@ function followed(){
 // Tweet every 20 seconds
 // setInterval(tweetIt, 1000* 20)
 
-tweetIt();
+// tweetIt();
 
-function tweetIt(){
-  var tweet = {
-    status: 'testing'
-  }
+// function tweetIt(){
+//   var tweet = {
+//     status: 'testing'
+//   }
 
-  T.post('statuses/update', tweet, tweeted);
+//   T.post('statuses/update', tweet, tweeted);
 
-  function tweeted(err, data, response){
-    if(err) {
-      console.log("Uh oh:  ", err)
-    } else {
-      console.log("it worked")
-    }
-  }
-}
+//   function tweeted(err, data, response){
+//     if(err) {
+//       console.log("Uh oh:  ", err)
+//     } else {
+//       console.log("it worked")
+//     }
+//   }
+// }
 
