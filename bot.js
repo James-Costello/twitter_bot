@@ -2,34 +2,41 @@ console.log ('BOT IS BOOTING UP...');
 var MarkovChain = require('markovchain')
 var Twit = require('twit');
 var fs = require('fs')
-var quotes = new MarkovChain(fs.readFileSync('./quotes.txt', 'utf8'))
 
-// simple text
-// var m = new MarkovChain('tx text te hey hey hey hey hey test on test on')
+//random Int function for lenght of chain
+function getRandomInt(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min)) + min;
+}
 
-// m.parse('add additional text')
+//Interval set for random time btw roughly every 20 - 40 minutes.
+function getRandomTime(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min)) + min;
+}
 
-// console.log(m.parse('more and more text').end(5).process())
-
-
-// import from file
-
-console.log(quotes.start('The').end(5).process())
+//////////////////////
+///BOT LABRATORY//////
+//////////////////////
 
 
 var config = require('./config');
 var T = new Twit(config)
 
-//Setting up a user stream
-var stream = T.stream('user');
+/////////////////////////////
+//Setting up a user stream///
+/////////////////////////////
 
-stream.on('follow', followed);
+// var stream = T.stream('user');
+// stream.on('follow', followed);
+// function followed(){
+// }
 
-function followed(){
-
-}
-
-// Get request
+////////////////
+// Get request//
+////////////////
 
 // var params = {
 //   q: 'danzig',
@@ -45,28 +52,56 @@ function followed(){
 //   }
 // }
 
+//////////////////////
+////MARKOV CHAINING///
+//////////////////////
 
-//Example of Post();
+//////////////////////
+//Example of Post();//
+//////////////////////
+
+setInterval(function() {
+    var quotes = new MarkovChain(fs.readFileSync('./quotes.txt', 'utf8'))
+    var snippet = quotes.start('The').end(getRandomInt(4,18)).process();
+      console.log(snippet)
+
+      var tweetIt = {
+        status: snippet
+      }
 
 
-// Tweet every 20 seconds
-// setInterval(tweetIt, 1000* 20)
+      T.post('statuses/update', tweetIt, tweeted);
 
-// tweetIt();
+      function tweeted(err, data, response){
+        if(err) {
+         console.log("Uh oh:  ", err)
+        } else {
+         console.log("it worked")
+        }
+      }
+ }, 4000)
 
-// function tweetIt(){
-//   var tweet = {
-//     status: 'testing'
-//   }
 
-//   T.post('statuses/update', tweet, tweeted);
 
-//   function tweeted(err, data, response){
-//     if(err) {
-//       console.log("Uh oh:  ", err)
-//     } else {
-//       console.log("it worked")
-//     }
-//   }
-// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
