@@ -41,6 +41,6 @@ setInterval(function() {
 
       var tweetIt = { status: snippet }
 
-      T.post('statuses/update', tweetIt, tweeted);
-      function tweeted(err, data, response){ err ? console.log("Uh oh:  ", err) : console.log("BOT (⌐■_■) BOT"); }
- }, getRandomTime(500 * 9, 500 * 20) )
+      // T.post('statuses/update', tweetIt, tweeted);
+      // function tweeted(err, data, response){ err ? console.log("Uh oh:  ", err) : console.log("BOT (⌐■_■) BOT"); }
+ }, getRandomTime(10 * .2, 10 * .2) )
